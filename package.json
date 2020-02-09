@@ -1,0 +1,31 @@
+{
+  "name": "@wintyo/vue-event-emission-plugin",
+  "version": "0.0.0",
+  "description": "Vue Event Emission Plugin",
+  "main": "lib/index.js",
+  "types": "lib/index.d.ts",
+  "files": [
+    "lib/*"
+  ],
+  "scripts": {
+    "build": "tsc"
+  },
+  "keywords": [
+    "vue",
+    "TypeScript"
+  ],
+  "homepage": "https://github.com/wintyo/vue-event-emission-plugin",
+  "repository": {
+    "type": "git",
+    "url": "git+ssh://git@github.com/wintyo/vue-event-emission-plugin.git"
+  },
+  "author": "wintyo <wintyo1024@gmail.com>",
+  "license": "MIT",
+  "peerDependencies": {
+    "vue": "^2.6.11"
+  },
+  "devDependencies": {
+    "typescript": "^3.7.5",
+    "vue": "^2.6.11"
+  }
+}
