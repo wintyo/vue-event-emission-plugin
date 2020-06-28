@@ -54,8 +54,10 @@ const Plugin = {
           $events[eventName] = (...args: Array<any>) => {
             const emit = (typeof events[eventName] === 'function') ? events[eventName] : events[eventName].payload;
             // check number of arguments
-            if (args.length !== emit.length) {
-              console.warn(`<${componentTag}>: '${eventName}' event args list is not match!`);
+            if (process.env.NODE_ENV !== 'production') {
+              if (args.length !== emit.length) {
+                console.warn(`<${componentTag}>: '${eventName}' event args list is not match!`);
+              }
             }
             this.$emit(eventName, ...emit(...args));
           };
@@ -63,22 +65,24 @@ const Plugin = {
         this.$events = $events;
 
         // check setting listener correctly
-        const listenerKeys = Object.keys(this.$listeners);
-        Object.keys(events).forEach((eventName) => {
-          const index = listenerKeys.indexOf(eventName);
-          if (index >= 0) {
-            listenerKeys.splice(index, 1);
-            return;
-          }
-          const isOptional = (typeof events[eventName] === 'object' && events[eventName].optional);
-          // output warning if not optional
-          if (!isOptional) {
-            console.warn(`${parentFileName}: <${componentTag}>'s '${eventName}' listener is not set.`);
-          }
-        });
-        listenerKeys.forEach((listenerKey) => {
-          console.warn(`${parentFileName}: '${listenerKey}' is not <${componentTag}>'s listener name.`);
-        });
+        if (process.env.NODE_ENV !== 'production') {
+          const listenerKeys = Object.keys(this.$listeners);
+          Object.keys(events).forEach((eventName) => {
+            const index = listenerKeys.indexOf(eventName);
+            if (index >= 0) {
+              listenerKeys.splice(index, 1);
+              return;
+            }
+            const isOptional = (typeof events[eventName] === 'object' && events[eventName].optional);
+            // output warning if not optional
+            if (!isOptional) {
+              console.warn(`${parentFileName}: <${componentTag}>'s '${eventName}' listener is not set.`);
+            }
+          });
+          listenerKeys.forEach((listenerKey) => {
+            console.warn(`${parentFileName}: '${listenerKey}' is not <${componentTag}>'s listener name.`);
+          });
+        }
       },
     });
   }
