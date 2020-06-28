@@ -34,6 +34,10 @@ declare module 'vue/types/vue' {
   }
 }
 
+// TODO: if production mode, omit warn log.
+// const isShowWarn = process.env.NODE_ENV !== 'production';
+const isShowWarn = true;
+
 const Plugin = {
   install(Vue: any) {
     Vue.mixin({
@@ -54,7 +58,7 @@ const Plugin = {
           $events[eventName] = (...args: Array<any>) => {
             const emit = (typeof events[eventName] === 'function') ? events[eventName] : events[eventName].payload;
             // check number of arguments
-            if (process.env.NODE_ENV !== 'production') {
+            if (isShowWarn) {
               if (args.length !== emit.length) {
                 console.warn(`<${componentTag}>: '${eventName}' event args list is not match!`);
               }
@@ -65,7 +69,7 @@ const Plugin = {
         this.$events = $events;
 
         // check setting listener correctly
-        if (process.env.NODE_ENV !== 'production') {
+        if (isShowWarn) {
           const listenerKeys = Object.keys(this.$listeners);
           Object.keys(events).forEach((eventName) => {
             const index = listenerKeys.indexOf(eventName);
