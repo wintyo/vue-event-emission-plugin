@@ -20,7 +20,7 @@ Vue.use(EventEmissionPlugin);
 ```
 
 ## Usage
-```
+```vue
 <template>
   <div>
     <button @click="$events.click1()">click1</button>
@@ -56,6 +56,38 @@ export default Vue.extend({
   },
 });
 </script>
+```
+
+### for class decorator
+```typescript
+import { Vue, Component } from 'vue-property-decorator';
+import { tEventEmissions } from '@wintyo/vue-event-emission-plugin';
+
+const events = {
+  // equivalent to `this.$emit('click1')`
+  click1: () => [],
+  // equivalent to `this.$emit('click2', value)`
+  click2: (value: number) => [value],
+  click3: {
+    // equivalent to `this.$emit('click3', value, text)`
+    payload: (value: number, text: string) => [value, text],
+    // optional flag is true if the event is option.
+    optional: true,
+  },
+};
+
+@Component(
+  events,
+)
+export default class MyComponent extends Vue {
+  // you can declare $events type.
+  $events: tEventEmissions<typeof events>;
+
+  onClick2() {
+    // this properties can be typed.
+    this.$events.click2(10);
+  }
+}
 ```
 
 ## Licence

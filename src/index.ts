@@ -6,12 +6,22 @@ export interface IEventOption {
   optional: boolean;
 }
 
+export interface IEvents {
+  [eventName: string]: tEventFunction | IEventOption;
+}
+
+export type tEventEmissions<Events extends IEvents> = {
+  [eventName in keyof Events]: Events[eventName] extends IEventOption
+    ? (...params: Parameters<Events[eventName]['payload']>) => void
+    : Events[eventName] extends tEventFunction
+      ? (...params: Parameters<Events[eventName]>) => void
+      : undefined;
+}
+
 // extend option
 declare module 'vue/types/options' {
   interface ComponentOptions<V extends Vue> {
-    events?: {
-      [eventName: string]: tEventFunction | IEventOption;
-    }
+    events?: IEvents;
   }
 }
 
