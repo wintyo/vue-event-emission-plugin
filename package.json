@@ -1,6 +1,6 @@
 {
   "name": "@wintyo/vue-event-emission-plugin",
-  "version": "0.0.2",
+  "version": "0.0.3",
   "description": "Vue Event Emission Plugin",
   "main": "lib/index.js",
   "types": "lib/index.d.ts",
