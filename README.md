@@ -11,11 +11,22 @@ $ yarn add @wintyo/vue-event-emission-plugin
 $ npm install --save @wintyo/vue-event-emission-plugin
 ```
 
-## Setup
+### CDN
+```html
+<script src="https://unpkg.com/@wintyo/vue-event-emission-plugin/lib/index.min.js"></script>
 ```
+
+## Setup
+```javascript
 import Vue from 'vue';
 import EventEmissionPlugin from '@wintyo/vue-event-emission-plugin';
 
+Vue.use(EventEmissionPlugin);
+```
+
+### CDN
+```javascript
+// If you have already loaded vue.js and vue-event-emission-plugin, you can run under the code.
 Vue.use(EventEmissionPlugin);
 ```
 
@@ -81,7 +92,7 @@ const events = {
 )
 export default class MyComponent extends Vue {
   // you can declare $events type.
-  $events: tEventEmissions<typeof events>;
+  $events!: tEventEmissions<typeof events>;
 
   onClick2() {
     // this properties can be typed.
